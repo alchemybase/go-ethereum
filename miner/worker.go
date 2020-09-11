@@ -733,6 +733,7 @@ func (w *worker) commitTransaction(tx *types.Transaction, coinbase common.Addres
 }
 
 func (w *worker) commitTransactions(txs *types.TransactionsByPriceAndNonce, coinbase common.Address, interrupt *int32) bool {
+	log.Info("IN COMMIT TRANSACTIONS")
 	// Short circuit if current is nil
 	if w.current == nil {
 		return true
@@ -809,7 +810,7 @@ func (w *worker) commitTransactions(txs *types.TransactionsByPriceAndNonce, coin
 			txs.Pop()
 
 		case nil:
-			log.Info("Adding tx to block with hash", tx.Hash())
+			log.Info("Adding tx to with hash", "tx hash", tx.Hash())
 			// Everything ok, collect the logs and shift in the next transaction from the same account
 			coalescedLogs = append(coalescedLogs, logs...)
 			w.current.tcount++
