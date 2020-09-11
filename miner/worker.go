@@ -733,7 +733,6 @@ func (w *worker) commitTransaction(tx *types.Transaction, coinbase common.Addres
 }
 
 func (w *worker) commitTransactions(txs *types.TransactionsByPriceAndNonce, coinbase common.Address, interrupt *int32) bool {
-	log.Info("IN COMMIT TRANSACTIONS")
 	// Short circuit if current is nil
 	if w.current == nil {
 		return true
