@@ -141,9 +141,12 @@ func TestTransactionPriceNonceSort(t *testing.T) {
 	}
 	// Sort the transactions and cross check the nonce ordering
 	txset := NewTransactionsByPriceAndNonce(signer, groups)
-
 	txs := Transactions{}
 	for tx := txset.Peek(); tx != nil; tx = txset.Peek() {
+		from, _ := Sender(signer, tx)
+		t.Errorf("%v", from.String())
+		t.Errorf("%v", tx.GasPrice())
+		// t.Errorf("%v", string(tx.MarshalJSON)
 		txs = append(txs, tx)
 		txset.Shift()
 	}
@@ -204,6 +207,7 @@ func TestTransactionTimeSort(t *testing.T) {
 	}
 	for i, txi := range txs {
 		fromi, _ := Sender(signer, txi)
+
 		if i+1 < len(txs) {
 			next := txs[i+1]
 			fromNext, _ := Sender(signer, next)
